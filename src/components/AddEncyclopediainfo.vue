@@ -1,0 +1,377 @@
+<!-- AddDoctorinfo -->
+<template>
+  <div class="Doctorinfo">
+    <!-- header -->
+    <div class="header">
+      <el-dropdown>
+        <p class="img"><img src="../assets/u2705.svg" alt="" /></p>
+        <span class="el-dropdown-link">
+          Sam<img
+            class="el-icon-arrow-down el-icon--right"
+            src="../assets/u2701.svg"
+          />
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            ><el-button @click="changepwd" style="border: none"
+              >修改密码</el-button
+            ></el-dropdown-item
+          >
+          <el-dropdown-item
+            ><el-button @click="signout" style="border: none"
+              >退出</el-button
+            ></el-dropdown-item
+          >
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+    <!-- Doctorinfo -->
+    <div class="info">
+      <div class="info-head">
+        <div class="h-left">
+          <span class="line"></span>
+          <h1>新增文章信息</h1>
+        </div>
+      </div>
+      <!-- main -->
+      <div class="main">
+        <div class="m-heade">
+          <h3>编辑文章信息</h3>
+        </div>
+
+        <div class="m-from">
+          <el-form
+            :model="ruleForm"
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="文章标题" prop="title">
+              <el-input
+                v-model="ruleForm.title"
+                class="input"
+                placeholder="请输入内容"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label="上传缩略图" prop="pic">
+              <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                v-model="ruleForm.pic"
+              >
+                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <i
+                  v-else
+                  class="el-icon-plus avatar-uploader-icon"
+                  style="border: 1px dashed #666666"
+                  ><span class="txt">上传照片</span></i
+                >
+              </el-upload>
+            </el-form-item>
+
+            <el-form-item label="作者" prop="author">
+              <el-input
+                v-model="ruleForm.author"
+                class="input"
+                placeholder="请输入内容"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label="文章内容" prop="info">
+              <br />
+              <div class="edit_container">
+                <quill-editor
+                  v-model="content"
+                  ref="myQuillEditor"
+                  :options="editorOption"
+                >
+                </quill-editor>
+              </div>
+            </el-form-item>
+
+            <el-form-item label="文章状态" prop="delivery">
+              <el-switch v-model="ruleForm.delivery"></el-switch>
+            </el-form-item>
+
+            <el-form-item label="上传时间" prop="time">
+              <el-input
+                placeholder="请选择日期"
+                class="input"
+                type="datetime-local"
+                v-model="ruleForm.time"
+              >
+              </el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm('ruleForm')"
+                style="width: 120px"
+                >保存</el-button
+              >
+              <el-button @click="resetForm('ruleForm')" style="width: 120px"
+                >取消</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+//富文本编辑器
+import { quillEditor } from "vue-quill-editor";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+
+export default {
+  //import引入的组件需要注入到对象中才能使用
+  components: {
+    quillEditor,
+  },
+  data() {
+    //这里存放数据
+    return {
+      content: "请输入内容",
+      editorOption: {},
+      ruleForm: {
+        title: "",
+        pic: "",
+        author: "",
+        time: "",
+        info: "",
+        delivery: "",
+      },
+      rules: {
+        title: [{ required: true, message: "请输入文章标题", trigger: "blur" }],
+        author: [{ required: true, message: "请输入作者", trigger: "blur" }],
+        info: [{ required: true, message: "请输入作者", trigger: "blur" }],
+      },
+      imageUrl: "",
+    };
+  },
+
+  //监听属性 类似于data概念
+  computed: {},
+  //监控data中的数据变化
+  watch: {},
+  //方法集合
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert("submit!");
+          this.$message({
+            message: "添加成功",
+            type: "success",
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    editor() {
+      return this.$edit;
+    },
+    changepwd() {
+      this.$router.push("/systemseting");
+    },
+    signout() {
+      this.$http.get("/signout").then((res) => {
+        console.log(res);
+        if (res.status == 1) {
+          this.$message({
+            message: "退出成功",
+            type: "success",
+          });
+          this.$router.push("/");
+        }
+      });
+    },
+  },
+  created() {
+    this.editor();
+  },
+};
+</script>
+<style lang='less' scoped>
+.Doctorinfo {
+  width: 100%;
+  height: 100%;
+  background: #f3f8ff;
+  .header {
+    height: 64px;
+    width: 100%;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    background: #fff;
+  }
+
+  .info {
+    width: 100%;
+    min-height: 60px;
+    box-sizing: border-box;
+    .info-head {
+      padding: 30px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      .h-left {
+        display: flex;
+        justify-content: center;
+        .line {
+          display: block;
+          width: 25px;
+          height: 6px;
+          border-radius: 3px;
+          background: #1a7dff;
+          align-self: center;
+        }
+        h1 {
+          font-size: 30px;
+          font-weight: 400;
+        }
+      }
+    }
+    .main {
+      width: 90%;
+      min-width: 700px;
+      height: 840px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+      margin: 0 auto;
+      // padding: 26px;
+      .m-heade {
+        height: 48px;
+        width: 100%;
+        background: #f2f2f2;
+        h3 {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 48px;
+          color: #006eff;
+          text-indent: 20px;
+        }
+      }
+      .m-from {
+        padding: 10px 20px;
+        .el-upload {
+          border: 2px dashed #666666;
+        }
+        .avatar-uploader .el-upload {
+          border: 1px dashed #666666;
+          border-radius: 6px;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+          border-color: #409eff;
+        }
+        .avatar-uploader-icon {
+          font-size: 28px;
+          color: #8c939d;
+          width: 110px;
+          height: 110px;
+          line-height: 110px;
+          text-align: center;
+        }
+        .avatar {
+          width: 110px;
+          height: 110px;
+          display: block;
+          background: #fafafa;
+        }
+        .txt {
+          font-size: 12px;
+          display: block;
+          margin-top: -80px;
+        }
+        .edit_container {
+          height: 280px;
+          margin-left: -80px;
+          .quill-editor {
+            height: 200px;
+          }
+        }
+      }
+    }
+  }
+}
+.input {
+  width: 320px;
+}
+.el-pagination {
+  margin-top: 10px;
+}
+.color {
+  background: #dbebff;
+  color: #006eff;
+  border: none;
+}
+el-option {
+  height: 160px;
+}
+.el-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 20px;
+  .img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1a7dff;
+    align-self: center;
+    img {
+      width: 20px;
+      height: 20px;
+      margin-top: 7px;
+    }
+  }
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+  margin: 0 10px;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+</style>
+
+
+
+
+
