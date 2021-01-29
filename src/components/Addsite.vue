@@ -3,7 +3,7 @@
   <div class="">
     <!-- <h1>医院导航</h1> -->
     <div class="header">
-      <a><img alt="" /></a>
+      <a><img src="../assets/u2705.svg" /></a>
       <el-dropdown>
         <span class="el-dropdown-link">
           sam<i class="el-icon-arrow-down el-icon--right"></i>
@@ -109,8 +109,8 @@ export default {
 }
 .header > a {
   /* float: right; */
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: blue;
   align-self: center;
@@ -122,7 +122,8 @@ export default {
 }
 .header > a > img {
   width: 23px;
-  height: 40px;
+  height: 23px;
+  margin:4px  0  0 4px;
 }
 .name {
   border-width: 0px;

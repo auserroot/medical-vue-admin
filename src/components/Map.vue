@@ -3,7 +3,7 @@
   <div class="">
     <!-- <h1>医院导航</h1> -->
     <div class="header">
-      <a><img alt="" /></a>
+      <a><img src="../assets/u2705.svg" /></a>
       <el-dropdown>
         <span class="el-dropdown-link">
           sam<i class="el-icon-arrow-down el-icon--right"></i>
@@ -24,8 +24,8 @@
             v-model="hospital"
             placeholder="请输入内容"
           ></el-input>
-          <el-button type="primary">搜索</el-button>
-          <el-button type="primary" @click="Goto">主要按钮</el-button>
+          <el-button type="primary" @click="Inquire">搜索</el-button>
+          <el-button type="primary" @click="Goto">新增院区</el-button>
         </div>
         <template>
           <el-table
@@ -38,14 +38,29 @@
             <el-table-column type="selection" width="70"> 
             </el-table-column>
             <el-table-column label="院区" width="190"  prop="inpatient">
+               <template slot-scope="scope">
+                  <input type="text" class="inpchange"  v-model="tableData[scope.$index].inpatient">
+                </template>
             </el-table-column>
             <el-table-column prop="site" width="190" label="地址" >
+              <template slot-scope="scope">
+                  <input type="text" class="inpchange"  v-model="tableData[scope.$index].site">
+                </template>
             </el-table-column>
             <el-table-column prop="phone" width="160" label="电话1" >
+              <template slot-scope="scope">
+                  <input type="text" class="inpchange"  v-model="tableData[scope.$index].phone">
+                </template>
             </el-table-column>
             <el-table-column prop="phone1" width="160" label="电话2" >
+              <template slot-scope="scope">
+                  <input type="text" class="inpchange"  v-model="tableData[scope.$index].phone1">
+                </template>
             </el-table-column>
             <el-table-column prop="traffic" width="250" label="出行方式" >
+              <template slot-scope="scope">
+                  <input type="text" class="inpchange"  v-model="tableData[scope.$index].traffic">
+                </template>
             </el-table-column>
             <el-table-column prop="time" width="190" label="操作时间" >
             </el-table-column>
@@ -97,6 +112,19 @@ export default {
       },
       Goto(){
         this.$router.push("addsite") 
+      },
+      Inquire(){
+        this.tableData = [];
+        this.expands.map((item,index)=>{
+          if(item.inpatient.indexOf(this.hospital)!=-1||
+             item.site.indexOf(this.hospital)!=-1||
+             item.phone.indexOf(this.hospital)!=-1||
+             item.phone1.indexOf(this.hospital)!=-1||
+             item.time.indexOf(this.hospital)!=-1
+             ){
+            this.tableData.push(item)
+          }
+        })
       }
   },
   /*{
@@ -170,8 +198,8 @@ export default {
 }
 .header > a {
   /* float: right; */
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: blue;
   align-self: center;
@@ -183,7 +211,8 @@ export default {
 }
 .header > a > img {
   width: 23px;
-  height: 40px;
+  height: 23px;
+  margin:4px  0  0 4px;
 }
 .name {
   border-width: 0px;
@@ -247,4 +276,11 @@ export default {
   width: 200px;
   margin: 0 20px;
 }
+.inpchange{
+  border: 0;
+  background:white;
+  outline: none;
+  background: none;
+}
+
 </style>

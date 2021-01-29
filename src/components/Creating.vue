@@ -2,7 +2,7 @@
 <template>
   <div class="">
     <div class="header">
-      <a><img alt="" /></a>
+      <a><img src="../assets/u2705.svg" /></a>
       <el-dropdown>
         <span class="el-dropdown-link">
           sam<i class="el-icon-arrow-down el-icon--right"></i>
@@ -17,51 +17,46 @@
       <div class="icon"></div>
       <div class="text">新增角色</div>
       <div class="box">
-          <div class="demo-input-suffix">
-        <span>联系电话:</span>
-        <el-input
-        placeholder="请输入内容">
-        </el-input>
+        <div class="demo-input-suffix">
+          <span>联系电话:</span>
+          <el-input placeholder="请输入内容"> </el-input>
         </div>
         <div class="demo-input-suffix">
-        <span>联系电话:</span>
-        <el-input
-        placeholder="请输入内容">
-        </el-input>
+          <span>联系电话:</span>
+          <el-input placeholder="请输入内容"> </el-input>
         </div>
         <div class="demo-input-suffix">
-        <span>联系电话:</span>
-        <el-input
-        placeholder="请输入内容">
-        </el-input>
+          <span>联系电话:</span>
+          <el-input placeholder="请输入内容"> </el-input>
         </div>
         <div class="demo-input-suffix">
-        <span>联系电话:</span>
-        <el-input
-        placeholder="请输入内容">
-        </el-input>
+          <span>联系电话:</span>
+          <el-input placeholder="请输入内容"> </el-input>
         </div>
         <div class="demo-input-suffix">
-        <span>联系电话:</span>
-        <el-input
-        placeholder="请输入内容">
-        </el-input>
+          <span>联系电话:</span>
+          <el-input placeholder="请输入内容"> </el-input>
         </div>
         <div class="demo-input-suffix">
-        <span>联系电话:</span>
-        <el-switch
-        v-model='val'
-        active-color="#13ce66"
-        inactive-color="#ff4949">
-        </el-switch>
+          <span>联系电话:</span>
+          <el-switch
+            v-model="val"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
         </div>
-         <div class="demo-input-suffix">
-        <el-button class="btn" type="primary" @click='Back'>新增角色</el-button>
-        <el-button class="btn" type="primary" @click="Goto">新增角色</el-button>
+        <div class="demo-input-suffix">
+          <el-button class="btn" type="primary" @click="Back"
+            >新增角色</el-button
+          >
+          <el-button class="btn" type="primary" @click="Goto"
+            >新增角色</el-button
+          >
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -69,44 +64,39 @@
 //例如：import 《组件名称》 from '《组件路径》';
 
 export default {
-//import引入的组件需要注入到对象中才能使用
-components: {},
-data() {
-//这里存放数据
-return {
-val:true,
-
+  //import引入的组件需要注入到对象中才能使用
+  components: {},
+  data() {
+    //这里存放数据
+    return {
+      val: true,
+    };
+  },
+  //监听属性 类似于data概念
+  computed: {},
+  //监控data中的数据变化
+  watch: {},
+  //方法集合
+  methods: {
+    Back() {
+      this.$router.push("administrator");
+    },
+    Goto() {
+      this.$router.push("administrator");
+    },
+  },
+  //生命周期 - 创建完成（可以访问当前this实例）
+  created() {},
+  //生命周期 - 挂载完成（可以访问DOM元素）
+  mounted() {},
+  beforeCreate() {}, //生命周期 - 创建之前
+  beforeMount() {}, //生命周期 - 挂载之前
+  beforeUpdate() {}, //生命周期 - 更新之前
+  updated() {}, //生命周期 - 更新之后
+  beforeDestroy() {}, //生命周期 - 销毁之前
+  destroyed() {}, //生命周期 - 销毁完成
+  activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
-},
-//监听属性 类似于data概念
-computed: {},
-//监控data中的数据变化
-watch: {},
-//方法集合
-methods: {
-Back(){
-   this.$router.push("administrator") 
-},
-Goto(){
-    this.$router.push("administrator") 
-}
-},
-//生命周期 - 创建完成（可以访问当前this实例）
-created() {
-
-},
-//生命周期 - 挂载完成（可以访问DOM元素）
-mounted() {
-
-},
-beforeCreate() {}, //生命周期 - 创建之前
-beforeMount() {}, //生命周期 - 挂载之前
-beforeUpdate() {}, //生命周期 - 更新之前
-updated() {}, //生命周期 - 更新之后
-beforeDestroy() {}, //生命周期 - 销毁之前
-destroyed() {}, //生命周期 - 销毁完成
-activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
-}
 </script>
 <style  scoped>
 .header {
@@ -118,8 +108,8 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 .header > a {
   /* float: right; */
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: blue;
   align-self: center;
@@ -131,7 +121,8 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 .header > a > img {
   width: 23px;
-  height: 40px;
+  height: 23px;
+  margin: 4px 0 0 4px;
 }
 .name {
   border-width: 0px;
@@ -185,12 +176,13 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   box-shadow: 0px 0px 20px rgba(215, 215, 215, 1);
   text-align: center;
 }
-.demo-input-suffix{
+.demo-input-suffix {
   display: flex;
   width: 500px;
   margin: 25px 0;
+  
 }
-.demo-input-suffix>span{
+.demo-input-suffix > span {
   width: 100px;
   color: #ccc;
   font-size: 14px;

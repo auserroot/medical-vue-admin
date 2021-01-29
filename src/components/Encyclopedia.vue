@@ -241,7 +241,10 @@ export default {
         if (
           item.title == inputValue ||
           item.author == inputValue ||
-          item.time == inputValue
+          item.time == inputValue ||
+          item.title.indexOf(inputValue) != -1 ||
+          item.author.indexOf(inputValue) != -1 ||
+          item.time.indexOf(inputValue) != -1
         ) {
           restaurants.push(item);
         }

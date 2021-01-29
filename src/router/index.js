@@ -21,24 +21,53 @@ const routes = [
   },
   // 主页
   {
-    path: '/index',
-    name: 'Index',
+    path: '/dashboard',
+    name: 'Dashboard',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/Index.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../components/Dashboard.vue'),
     children:[
+  //首页
+  {
+    path: '',
+    component:()=>import('../components/Home.vue'),
+    meta:['首页']
+  },
        // 预约
   {
     path:'/reserve',
     name:'Reserve',
     component:()=>import('../components/Reserve.vue')
   },
+  {
+    path: '/reserve/detail/:resDetailId',
+    name: 'ReserveDetail',
+    component:()=>import('../components/ReserveDetail.vue')
+  },
   // 费用
   {
     path:'/cost',
     name:'Cost',
     component:()=>import('../components/Cost.vue')
+  },
+  {
+    path:'/cost/costDetial/:id',
+    name:'CostDetial',
+    component:()=>import('../components/CostDetial.vue'),
+    props:true
+  },
+  {
+    path:'/pay/payDetial/:id',
+    name:'PayDetial',
+    component:()=>import('../components/payDetial.vue'),
+    props:true
+  },
+  {
+    path:'/refund/refundDetial/:id',
+    name:'RefundDetial',
+    component:()=>import('../components/refundDetial.vue'),
+    props:true
   },
   // 医院信息
   {
@@ -140,25 +169,26 @@ const routes = [
     name:'Creating',
     component:()=>import('../components/Creating.vue')
   },
+  {
+    path: '/*',
+    redirect: '/dashboard'
+  }
     ]
   },
  
 ]
 
-//全局守卫
-// router.beforeEach((to,from,next)=>{
-//   // console.log(from)
-//   // console.log(store)
-//   // console.log(to)
-//   if (store.state.status === 1||to.path === '/index') {
-//     next()
-//   } else {
-//     next("/index")
-//   }
-// })
-
 const router = new VueRouter({
   routes
 })
+
+// 全局守卫
+// router.beforeEach((to,from,next)=>{
+//   if(store.state.status === 1 || to.path === '/') {
+//     next()
+//   }else{
+//     next('/')
+//   }
+// })
 
 export default router

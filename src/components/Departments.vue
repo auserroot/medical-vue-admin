@@ -336,7 +336,10 @@ export default {
           item.mainjor == inputValue ||
           item.address == inputValue ||
           item.tower == inputValue ||
-          item.id == inputValue
+          item.id == inputValue ||
+          item.mainjor.indexOf(inputValue) != -1 ||
+          item.address.indexOf(inputValue) != -1 ||
+          item.tower.indexOf(inputValue) != -1
         ) {
           restaurants.push(item);
         }

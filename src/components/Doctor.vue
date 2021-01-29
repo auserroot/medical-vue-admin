@@ -370,7 +370,12 @@ export default {
       let inputValue = String(this.inputval);
       this.tableData.map(function (item, index) {
         console.log(item, index);
-        if (item.name == inputValue || item.address == inputValue) {
+        if (
+          item.name == inputValue ||
+          item.address == inputValue ||
+          item.name.indexOf(inputValue) != -1 ||
+          item.address.indexOf(inputValue) != -1
+        ) {
           restaurants.push(item);
         }
         console.log(restaurants);

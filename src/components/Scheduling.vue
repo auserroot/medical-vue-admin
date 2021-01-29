@@ -3,8 +3,7 @@
   <div class="">
     <!-- <h1>医生排班</h1> -->
     <div class="header">
-      <a><img alt=""
-/></a>
+      <a><img src="../assets/u2705.svg"/></a>
       <el-dropdown>
         <span class="el-dropdown-link">
           sam<i class="el-icon-arrow-down el-icon--right"></i>
@@ -26,10 +25,8 @@
             <el-radio-button label="right">下周</el-radio-button>
           </el-radio-group>
           <div class="inp">
-          <el-input v-model="name" placeholder="请输入内容"></el-input>
-          <el-button type="primary" @click="searchName">搜索</el-button>
-          <el-input v-model="department" placeholder="请输入内容"></el-input>
-          <el-button type="primary" @click="searchDepartment">搜索</el-button>
+          <el-input v-model="inp" placeholder="请输入内容"></el-input>
+          <el-button type="primary" @click="Search">搜索</el-button>
           </div>
         </div>
         <el-table
@@ -158,8 +155,8 @@ export default {
     //这里存放数据
     return {
         radio:'centre',
-        name:'',
-        department:'',
+        inp:'',
+        // department:'',
         tableData:[],
         num:0,
         expands:[],
@@ -217,24 +214,16 @@ export default {
       handleCurrentChange(val) {
         this.tableData=this.expands.slice(0+this.val*(val-1),val*this.val)
       },
-      searchName:function(){
-        for(var i=0;i<this.expands.length;i++){
-          if(this.name==this.expands[i].name){
-            this.arr.push(this.expands[i])
+      Search:function(){
+      this.tableData = [];
+        this.expands.map((item,index)=>{
+          if(item.name.indexOf(this.inp)!=-1||
+             item.department.indexOf(this.inp)!=-1
+             ){
+            this.tableData.push(item)
           }
-        }
-        console.log(this.arr)
-        this.tableData = this.arr
-      },
-      searchDepartment:function(){
-        for(var i=0;i<this.expands.length;i++){
-          if(this.department==this.expands[i].department){
-            this.arr.push(this.expands[i])
-          }
-        }
-        console.log(this.arr)
-        this.tableData = this.arr
-      },
+        })
+      }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
@@ -268,8 +257,8 @@ export default {
 }
 .header > a {
   /* float: right; */
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: blue;
   align-self: center;
@@ -281,7 +270,8 @@ export default {
 }
 .header > a > img {
   width: 23px;
-  height: 40px;
+  height: 23px;
+  margin:4px  0  0 4px;
 }
 .name {
   border-width: 0px;
