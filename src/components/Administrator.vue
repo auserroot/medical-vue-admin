@@ -8,8 +8,16 @@
           sam<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>修改密码</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item
+            ><el-button @click="changepwd" style="border: none"
+              >修改密码</el-button
+            ></el-dropdown-item
+          >
+          <el-dropdown-item
+            ><el-button @click="signout" style="border: none"
+              >退出</el-button
+            ></el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -62,6 +70,7 @@
                     v-model="tableData[scope.$index].if"
                     active-color="#13ce66"
                     inactive-color="#ff4949"
+                    @change='Change(scope.$index, tableData)'
                   >
                   </el-switch>
                 </template>
@@ -110,8 +119,26 @@ export default {
   methods: {
     searchName() {},
     deleteRow(index, rows) {
-      rows.splice(index, 1);
-    },
+        this.$confirm('是否全扔删除该用户？', '确认信息', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        })
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功',
+            });
+          rows.splice(index, 1)},)
+          .catch(action => {
+            this.$message({
+              type: 'error',
+              message: action === 'cancel'
+                ? '删除失败'
+                : '删除失败'
+            })
+          });
+      },
     changeRow(index, rows){
           this.$alert('<input type="text" v-model="rows[index].user">', 'HTML 片段', {
           dangerouslyUseHTMLString: true
@@ -136,6 +163,31 @@ export default {
             console.log(this.tableData)
           }
         })
+    },
+    changepwd() {
+      this.$router.push("/systemseting");
+    },
+    signout() {
+      this.$http.get("/signout").then((res) => {
+        console.log(res);
+        if (res.status == 1) {
+          this.$message({
+            message: "退出成功",
+            type: "success",
+          });
+          this.$router.push("/");
+        }
+      });
+    },
+    Change(i,arr){
+      if(arr[i].if){
+        this.$message({
+          message: '权限开启',
+          type: 'success'
+        });
+      }else{
+         this.$message.error('权限关闭');
+      }
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -252,5 +304,23 @@ export default {
   background:white;
   outline: none;
   background: none;
+}
+.el-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 20px;
+  justify-content: center ;
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+  margin: 0 10px;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
 }
 </style>

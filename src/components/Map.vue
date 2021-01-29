@@ -9,8 +9,16 @@
           sam<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>修改密码</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item
+            ><el-button @click="changepwd" style="border: none"
+              >修改密码</el-button
+            ></el-dropdown-item
+          >
+          <el-dropdown-item
+            ><el-button @click="signout" style="border: none"
+              >退出</el-button
+            ></el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -108,7 +116,25 @@ export default {
         this.multipleSelection = val;
       },
       deleteRow(index, rows) {
-        rows.splice(index, 1);
+        this.$confirm('是否全扔删除该地址？', '确认信息', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        })
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功',
+            });
+          rows.splice(index, 1)},)
+          .catch(action => {
+            this.$message({
+              type: 'error',
+              message: action === 'cancel'
+                ? '删除失败'
+                : '删除失败'
+            })
+          });
       },
       Goto(){
         this.$router.push("addsite") 
@@ -125,7 +151,22 @@ export default {
             this.tableData.push(item)
           }
         })
-      }
+      },
+       changepwd() {
+      this.$router.push("/systemseting");
+    },
+    signout() {
+      this.$http.get("/signout").then((res) => {
+        console.log(res);
+        if (res.status == 1) {
+          this.$message({
+            message: "退出成功",
+            type: "success",
+          });
+          this.$router.push("/");
+        }
+      });
+    },
   },
   /*{
 		{
@@ -282,5 +323,22 @@ export default {
   outline: none;
   background: none;
 }
+.el-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 20px;
+  justify-content: center ;
+}
 
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+  margin: 0 10px;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>

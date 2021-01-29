@@ -23,7 +23,7 @@
           </el-menu-item>
           <el-submenu index='booking'>
             <template slot="title">
-              <i class="el-icon-documen"></i>
+              <i class="el-icon-s-order"></i>
               <span>预约管理</span>
             </template>
             <el-menu-item index='/reserve'>预约挂号</el-menu-item>

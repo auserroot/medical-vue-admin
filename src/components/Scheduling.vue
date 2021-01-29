@@ -9,8 +9,16 @@
           sam<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>修改密码</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item
+            ><el-button @click="changepwd" style="border: none"
+              >修改密码</el-button
+            ></el-dropdown-item
+          >
+          <el-dropdown-item
+            ><el-button @click="signout" style="border: none"
+              >退出</el-button
+            ></el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -223,7 +231,22 @@ export default {
             this.tableData.push(item)
           }
         })
-      }
+      },
+      changepwd() {
+      this.$router.push("/systemseting");
+    },
+    signout() {
+      this.$http.get("/signout").then((res) => {
+        console.log(res);
+        if (res.status == 1) {
+          this.$message({
+            message: "退出成功",
+            type: "success",
+          });
+          this.$router.push("/");
+        }
+      });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
@@ -341,5 +364,22 @@ export default {
 .el-input{
     margin: 0 10px;
 }
+.el-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 0 20px;
+  justify-content: center ;
+}
 
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+  margin: 0 10px;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>
